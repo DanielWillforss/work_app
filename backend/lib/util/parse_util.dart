@@ -44,6 +44,29 @@ ParseResult<DateTime?> parseDatetime(String? rawDatetime) {
   return ParseResult.ok(parsed);
 }
 
+ParseResult<double?> parseDouble(dynamic rawDouble) {
+  // Case 1: It's already a double
+  if (rawDouble == null) {
+    return ParseResult.ok(null);
+  }
+  if (rawDouble is double) {
+    return ParseResult.ok(rawDouble);
+  }
+  // Case 2: It's an int
+  else if (rawDouble is int) {
+    return ParseResult.ok(rawDouble.toDouble());
+  }
+  // Case 3: It's a string (optional, if JSON serialized numbers as strings)
+  else if (rawDouble is String) {
+    final output = double.tryParse(rawDouble);
+    if (output == null) {
+      return ParseResult.badRequest('Invalid Double');
+    }
+  }
+  // Case 4: It's null or something else
+  return ParseResult.badRequest('Invalid Double');
+}
+
 /// Returns the request as a map if possible
 /// Returns null if not possible
 /// Returns null if the request contains keys not mentioned in allowedKeys

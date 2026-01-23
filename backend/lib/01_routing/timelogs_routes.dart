@@ -3,6 +3,7 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:workapp_backend/02_Repositories/timelog_repository.dart';
 import 'package:workapp_backend/util/general_util.dart';
+import 'package:workapp_backend/util/google_sheets_api.dart';
 import 'package:workapp_backend/util/parse_util.dart';
 
 class TimelogRoutes {
@@ -26,6 +27,9 @@ class TimelogRoutes {
 
     // DELETE /timelogs/<id>
     router.delete('/timelogs/<id>', _delete);
+
+    // POST /timelogs/upload
+    router.post('/timelogs/upload', _upload);
   }
 
   /// returns all timelogs as a list of json with the keys "id", "start_time", "end_time", "note"
@@ -130,6 +134,21 @@ class TimelogRoutes {
       return jsonResponse({'status': 'deleted'});
     } on IdNotFoundException {
       return jsonResponse({'status': 'not_found'});
+    }
+  }
+
+  Future<Response> _upload(Request req) async {
+    print("uploading");
+    try {
+      final googleApi = GoogleApiHandeler();
+      await googleApi.init();
+
+      final logs = await timelogRepo.findAll(conn);
+      print("trying to write");
+      await googleApi.writeData(logs);
+      return jsonResponse({'status': 'uploaded'});
+    } on IdNotFoundException {
+      return Response.badRequest(body: 'upload failed');
     }
   }
 }

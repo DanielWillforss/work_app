@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Timelog {
   final int id;
   final DateTime startTime;
@@ -22,5 +24,27 @@ class Timelog {
       'end_time': endTime?.toIso8601String(),
       'note': note,
     };
+  }
+
+  List<String> toSheetEntry() {
+    final weekdaySv = DateFormat('EEEE', 'sv_SE').format(startTime);
+    final date = '${startTime.day}/${startTime.month}';
+    final start =
+        '${startTime.hour}:${startTime.minute.toString().padLeft(2, '0')}';
+
+    String end = '';
+    String duration = '';
+
+    if (endTime != null) {
+      end = '${endTime!.hour}:${endTime!.minute.toString().padLeft(2, '0')}';
+
+      final diff = endTime!.difference(startTime);
+      final hours = diff.inHours;
+      final minutes = diff.inMinutes % 60;
+
+      duration = '${hours}h${minutes}min';
+    }
+
+    return [weekdaySv, date, start, end, duration, '', note ?? ''];
   }
 }

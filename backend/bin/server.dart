@@ -10,8 +10,10 @@ import 'package:workapp_backend/01_routing/notes_routes.dart';
 import 'package:workapp_backend/02_Repositories/note_repository.dart';
 import 'package:workapp_backend/01_routing/timelogs_routes.dart';
 import 'package:workapp_backend/02_Repositories/timelog_repository.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 Future<void> main() async {
+  await initializeDateFormatting('sv_SE', null);
   final conn = await DatabaseConnection.get();
   final router = Router();
 

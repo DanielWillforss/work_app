@@ -19,5 +19,5 @@ CREATE TABLE content.timelogs (
 )
 
 ----------
-DROP TABLE content.notes;
-DROP TABLE content.timelogs;
+--DROP TABLE content.notes;
+--DROP TABLE content.timelogs;

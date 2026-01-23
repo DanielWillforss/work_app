@@ -6,7 +6,7 @@ class TestDatabaseConnection {
       Endpoint(
         host: 'localhost',
         port: 5432,
-        database: 'workapp_test',
+        database: 'test_db',
         username: 'admin',
         password: 'admin',
       ),

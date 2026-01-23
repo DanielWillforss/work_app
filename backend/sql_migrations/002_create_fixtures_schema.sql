@@ -44,6 +44,6 @@ CREATE INDEX ON fixtures.fixture_model (manufacturer_id);
 CREATE INDEX ON fixtures.fixture_model (fixture_type_id);
 
 -----
-DROP TABLE fixtures.fixture_model;
-DROP TABLE fixtures.fixture_type;
-DROP TABLE fixtures.manufacturer;
+-- DROP TABLE fixtures.fixture_model;
+-- DROP TABLE fixtures.fixture_type;
+-- DROP TABLE fixtures.manufacturer;

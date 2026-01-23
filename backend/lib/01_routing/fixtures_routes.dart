@@ -214,7 +214,9 @@ class FixturesRoutes {
         fixtureTypeId: payload['fixture_type_id'],
         modelName: payload['model_name'],
         shortName: payload['short_name'],
-        powerPeakAmps: payload['power_peak_amps'],
+        powerPeakAmps: payload['power_peak_amps'] != null
+            ? double.parse(payload['power_peak_amps'])
+            : null,
         usualDmxMode: payload['usual_dmx_mode'],
         notes: payload['notes'],
       );

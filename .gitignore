@@ -19,3 +19,6 @@ Thumbs.db
 # ===== DB / Secrets =====
 *.db
 .env
+
+# ===== Credentials =====
+backend/credentials/

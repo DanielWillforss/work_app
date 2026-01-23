@@ -33,6 +33,24 @@ class _LogHoursPage extends State<LogHoursPage> {
         },
         child: const Icon(Icons.add),
       ),
+
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ElevatedButton.icon(
+          icon: const Icon(Icons.cloud_upload),
+          label: const Text('Upload Timelogs'),
+          style: ElevatedButton.styleFrom(
+            minimumSize: const Size.fromHeight(50), // full-width button
+          ),
+          onPressed: () async {
+            await TimelogsApi.uploadTimelogs();
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(const SnackBar(content: Text('Timelogs uploaded')));
+          },
+        ),
+      ),
+
       body: FutureBuilder<List<Timelog>>(
         future: _timelogsFuture,
         builder: (context, snapshot) {

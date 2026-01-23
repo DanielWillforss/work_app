@@ -68,4 +68,13 @@ class TimelogsApi {
       throw Exception('Failed to delete timelog');
     }
   }
+
+  /// // POST /timelogs/upload
+  static Future<void> uploadTimelogs() async {
+    final response = await http.post(Uri.parse('$baseUrl/timelogs/upload'));
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to upload timelogs');
+    }
+  }
 }

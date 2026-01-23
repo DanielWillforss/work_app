@@ -1,0 +1,21 @@
+# ===== Dart / Flutter =====
+.dart_tool/
+.packages
+build/
+
+# Flutter generated
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# ===== IDE =====
+.vscode/
+.idea/
+*.iml
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+
+# ===== DB / Secrets =====
+*.db
+.env

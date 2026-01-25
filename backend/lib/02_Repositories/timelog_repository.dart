@@ -1,5 +1,5 @@
 import 'package:postgres/postgres.dart';
-import 'package:workapp_backend/00_models/timelog.dart';
+import 'package:shared_models/models/timelog_model.dart';
 import 'package:workapp_backend/util/general_util.dart';
 
 class TimelogRepository {
@@ -9,7 +9,7 @@ class TimelogRepository {
       Sql.named('SELECT * FROM content.timelogs ORDER BY id DESC'),
     );
 
-    return result.map((row) => Timelog.fromMap(row.toColumnMap())).toList();
+    return result.map((row) => Timelog.fromSql(row.toColumnMap())).toList();
   }
 
   /// Get a specific timelog by id
@@ -21,7 +21,7 @@ class TimelogRepository {
     );
 
     if (result.isEmpty) throw IdNotFoundException(id);
-    return Timelog.fromMap(result.first.toColumnMap());
+    return Timelog.fromSql(result.first.toColumnMap());
   }
 
   /// Add a new timelog
@@ -47,7 +47,7 @@ class TimelogRepository {
         'note': note ?? '',
       },
     );
-    return Timelog.fromMap(result.first.toColumnMap());
+    return Timelog.fromSql(result.first.toColumnMap());
   }
 
   /// Update an existing timelog
@@ -100,7 +100,7 @@ class TimelogRepository {
       throw IdNotFoundException(id);
     }
 
-    return Timelog.fromMap(result.first.toColumnMap());
+    return Timelog.fromSql(result.first.toColumnMap());
   }
 
   /// Delete a timelog by id

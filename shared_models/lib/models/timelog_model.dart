@@ -17,6 +17,15 @@ class Timelog {
     );
   }
 
+  factory Timelog.fromSql(Map<String, dynamic> map) {
+    return Timelog(
+      id: map['id'] as int,
+      startTime: map['start_time'] as DateTime,
+      endTime: map['end_time'] as DateTime?,
+      note: map['note'] as String?,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,

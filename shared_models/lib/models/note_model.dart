@@ -23,6 +23,16 @@ class Note {
     );
   }
 
+  factory Note.fromSql(Map<String, dynamic> map) {
+    return Note(
+      id: map['id'],
+      title: map['title'],
+      body: map['body'],
+      createdAt: map['created_at'],
+      updatedAt: map['updated_at'],
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,

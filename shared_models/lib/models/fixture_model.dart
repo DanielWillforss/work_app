@@ -43,6 +43,23 @@ class Fixture {
     );
   }
 
+  factory Fixture.fromSql(Map<String, dynamic> map) {
+    return Fixture(
+      id: map['id'],
+      manufacturerId: map['manufacturer_id'],
+      fixtureTypeId: map['fixture_type_id'],
+      modelName: map['model_name'],
+      shortName: map['short_name'],
+      powerPeakAmps: map['power_peak_amps'] != null
+          ? double.parse(map['power_peak_amps'])
+          : null,
+      usualDmxMode: map['usual_dmx_mode'],
+      notes: map['notes'],
+      createdAt: map['created_at'],
+      updatedAt: map['updated_at'],
+    );
+  }
+
   Map<String, dynamic> toJson() => {
     'id': id,
     'manufacturer_id': manufacturerId,

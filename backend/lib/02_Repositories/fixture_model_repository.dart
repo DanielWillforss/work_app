@@ -1,5 +1,5 @@
 import 'package:postgres/postgres.dart';
-import 'package:workapp_backend/00_models/fixture_model.dart';
+import 'package:shared_models/models/fixture_model.dart';
 import 'package:workapp_backend/util/general_util.dart';
 
 //Used for tests
@@ -12,7 +12,7 @@ class FixtureModelRepository {
   FixtureModelRepository({this.txRunner});
 
   /// returns all FixtureModels as a list
-  Future<List<FixtureModel>> findAll(Connection conn) async {
+  Future<List<Fixture>> findAll(Connection conn) async {
     final result = await conn.execute(
       Sql.named('''
         SELECT * FROM fixtures.fixture_model
@@ -20,9 +20,7 @@ class FixtureModelRepository {
       '''),
     );
 
-    return result
-        .map((row) => FixtureModel.fromMap(row.toColumnMap()))
-        .toList();
+    return result.map((row) => Fixture.fromSql(row.toColumnMap())).toList();
   }
 
   /// returns all FixtureTypes as a list
@@ -50,7 +48,7 @@ class FixtureModelRepository {
 
   /// returns fixture model by id
   /// throws IdNotFoundException for non-existant id
-  Future<FixtureModel> findById(Connection conn, int id) async {
+  Future<Fixture> findById(Connection conn, int id) async {
     final result = await conn.execute(
       Sql.named('''
         SELECT * FROM fixtures.fixture_model
@@ -60,14 +58,11 @@ class FixtureModelRepository {
     );
 
     if (result.isEmpty) throw IdNotFoundException(id);
-    return FixtureModel.fromMap(result.first.toColumnMap());
+    return Fixture.fromSql(result.first.toColumnMap());
   }
 
   /// returns a list of fixture model with given type
-  Future<List<FixtureModel>> findByType(
-    Connection conn,
-    int fixtureTypeId,
-  ) async {
+  Future<List<Fixture>> findByType(Connection conn, int fixtureTypeId) async {
     final result = await conn.execute(
       Sql.named('''
         SELECT * FROM fixtures.fixture_model
@@ -78,13 +73,11 @@ class FixtureModelRepository {
     );
 
     if (result.isEmpty) throw IdNotFoundException(fixtureTypeId);
-    return result
-        .map((row) => FixtureModel.fromMap(row.toColumnMap()))
-        .toList();
+    return result.map((row) => Fixture.fromSql(row.toColumnMap())).toList();
   }
 
   /// returns a list of fixture model with given manufacturer
-  Future<List<FixtureModel>> findByManufacturer(
+  Future<List<Fixture>> findByManufacturer(
     Connection conn,
     int manufacturerId,
   ) async {
@@ -98,15 +91,13 @@ class FixtureModelRepository {
     );
 
     if (result.isEmpty) throw IdNotFoundException(manufacturerId);
-    return result
-        .map((row) => FixtureModel.fromMap(row.toColumnMap()))
-        .toList();
+    return result.map((row) => Fixture.fromSql(row.toColumnMap())).toList();
   }
 
   /// add new fixture model
   /// also creates new manufacturer if reference manufacturer doesn't exist
   /// Sets createdAt and updatedAt to now()
-  Future<FixtureModel> insert(
+  Future<Fixture> insert(
     Connection conn, {
     required ManufacturerRef manufacturer,
     required int fixtureTypeId,
@@ -169,7 +160,7 @@ class FixtureModelRepository {
         },
       );
     });
-    return FixtureModel.fromMap(result.first.toColumnMap());
+    return Fixture.fromSql(result.first.toColumnMap());
   }
 
   /// Update fixture model
@@ -179,7 +170,7 @@ class FixtureModelRepository {
   /// throws IdNotFoundException if model Id does not exist
   /// throws IdNotFoundException if new manufacturer Id does not exist
   /// throws NullUpdateExeption if nothing is updated
-  Future<FixtureModel> update(
+  Future<Fixture> update(
     Connection conn, {
     required int id,
     ManufacturerRef? manufacturer,
@@ -300,7 +291,7 @@ class FixtureModelRepository {
         }
       }
 
-      return FixtureModel.fromMap(result.first.toColumnMap());
+      return Fixture.fromSql(result.first.toColumnMap());
     });
   }
 

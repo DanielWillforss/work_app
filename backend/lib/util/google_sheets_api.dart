@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:googleapis/sheets/v4.dart' as sheets;
 import 'package:googleapis_auth/auth_io.dart';
-import 'package:workapp_backend/00_models/timelog.dart';
+import 'package:shared_models/models/timelog_model.dart';
 
 class GoogleApiHandeler {
   final _spreadsheetId = '19W9GKHtWfoI0R0Yp4blP4Uz9Hcqe1vOmSHrSh2v6C8k';

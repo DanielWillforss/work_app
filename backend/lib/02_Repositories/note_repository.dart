@@ -1,5 +1,5 @@
 import 'package:postgres/postgres.dart';
-import 'package:workapp_backend/00_models/note.dart';
+import 'package:shared_models/models/note_model.dart';
 import 'package:workapp_backend/util/general_util.dart';
 
 class NoteRepository {
@@ -9,7 +9,7 @@ class NoteRepository {
       Sql.named('SELECT * FROM content.notes ORDER BY created_at DESC'),
     );
 
-    return result.map((row) => Note.fromMap(row.toColumnMap())).toList();
+    return result.map((row) => Note.fromSql(row.toColumnMap())).toList();
   }
 
   // returns Note by id
@@ -21,7 +21,7 @@ class NoteRepository {
     );
 
     if (result.isEmpty) throw IdNotFoundException(id);
-    return Note.fromMap(result.first.toColumnMap());
+    return Note.fromSql(result.first.toColumnMap());
   }
 
   /// Adds new note
@@ -38,7 +38,7 @@ class NoteRepository {
       parameters: {'title': title ?? '', 'body': body ?? ''},
     );
 
-    return Note.fromMap(result.first.toColumnMap());
+    return Note.fromSql(result.first.toColumnMap());
   }
 
   /// Update title and/or content of a note
@@ -87,7 +87,7 @@ class NoteRepository {
       throw IdNotFoundException(id);
     }
 
-    return Note.fromMap(result.first.toColumnMap());
+    return Note.fromSql(result.first.toColumnMap());
   }
 
   // Delete a note

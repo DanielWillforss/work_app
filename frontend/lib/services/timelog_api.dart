@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../models/timelog.dart';
+import 'package:shared_models/models/timelog_model.dart';
+import 'package:work_app/main.dart';
 
 class TimelogsApi {
-  static const String baseUrl = 'http://192.168.50.71:8080';
+  static const String baseUrl = GlobalConstants.baseUrl;
 
   /// GET /timelogs
   static Future<List<Timelog>> getTimelogs() async {
@@ -14,7 +15,7 @@ class TimelogsApi {
     }
 
     final List data = jsonDecode(response.body);
-    return data.map((e) => Timelog.fromJson(e)).toList();
+    return data.map((e) => Timelog.fromMap(e)).toList();
   }
 
   /// POST /timelogs

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:work_app/models/note.dart';
+import 'package:shared_models/models/note_model.dart';
 import 'package:work_app/services/notes_api.dart';
 
 class NoteDetailPage extends StatefulWidget {

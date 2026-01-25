@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
-import '../models/fixture.dart';
+import 'package:shared_models/models/fixture_model.dart';
+import 'package:work_app/main.dart';
 
 class FixturesApi {
-  static const String baseUrl = 'http://192.168.50.71:8080';
+  static const String baseUrl = GlobalConstants.baseUrl;
 
   /// GET /fixtures/models
   static Future<List<Fixture>> getFixtures() async {
@@ -16,7 +16,7 @@ class FixturesApi {
     //print(response.body);
 
     final List data = jsonDecode(response.body);
-    return data.map((e) => Fixture.fromJson(e)).toList();
+    return data.map((e) => Fixture.fromMap(e)).toList();
   }
 
   /// GET /fixtures/models/{id}
@@ -27,7 +27,7 @@ class FixturesApi {
       throw Exception('Failed to load fixture');
     }
 
-    return Fixture.fromJson(jsonDecode(response.body));
+    return Fixture.fromMap(jsonDecode(response.body));
   }
 
   /// GET /fixtures/models/type/{id}
@@ -41,7 +41,7 @@ class FixturesApi {
     }
 
     final List data = jsonDecode(response.body);
-    return data.map((e) => Fixture.fromJson(e)).toList();
+    return data.map((e) => Fixture.fromMap(e)).toList();
   }
 
   /// GET /fixtures/models/manufacturer/{id}
@@ -57,7 +57,7 @@ class FixturesApi {
     }
 
     final List data = jsonDecode(response.body);
-    return data.map((e) => Fixture.fromJson(e)).toList();
+    return data.map((e) => Fixture.fromMap(e)).toList();
   }
 
   /// POST /fixtures/models
@@ -90,7 +90,7 @@ class FixturesApi {
       throw Exception('Failed to create fixture');
     }
 
-    return Fixture.fromJson(jsonDecode(response.body));
+    return Fixture.fromMap(jsonDecode(response.body));
   }
 
   /// PUT /fixtures/models/{id}
@@ -124,7 +124,7 @@ class FixturesApi {
       throw Exception('Failed to update fixture');
     }
 
-    return Fixture.fromJson(jsonDecode(response.body));
+    return Fixture.fromMap(jsonDecode(response.body));
   }
 
   /// DELETE /fixtures/models/{id}

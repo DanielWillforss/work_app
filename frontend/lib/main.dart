@@ -9,6 +9,11 @@ void main() {
   runApp(MyApp());
 }
 
+class GlobalConstants {
+  static const String baseUrl = 'https://danielwillforss.site';
+  static const String version = '1.1.0';
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

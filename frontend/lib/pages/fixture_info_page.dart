@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:work_app/models/fixture.dart';
+import 'package:shared_models/models/fixture_model.dart';
 import 'package:work_app/models/fixture_tabledata.dart';
 import 'package:work_app/pages/fixture_detail_page.dart';
 import 'package:work_app/services/fixtures_api.dart';

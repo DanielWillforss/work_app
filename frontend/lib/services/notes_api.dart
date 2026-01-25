@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../models/note.dart';
+import 'package:shared_models/models/note_model.dart';
+import 'package:work_app/main.dart';
 
 class NotesApi {
-  static const String baseUrl = 'http://192.168.50.71:8080';
+  static const String baseUrl = GlobalConstants.baseUrl;
 
   /// GET /notes
   static Future<List<Note>> getNotes() async {
@@ -14,7 +15,8 @@ class NotesApi {
     }
 
     final List data = jsonDecode(response.body);
-    return data.map((e) => Note.fromJson(e)).toList();
+    print(data);
+    return data.map((e) => Note.fromMap(e)).toList();
   }
 
   /// POST /notes
@@ -29,7 +31,7 @@ class NotesApi {
       throw Exception('Failed to create note');
     }
 
-    final Note note = Note.fromJson(jsonDecode(response.body));
+    final Note note = Note.fromMap(jsonDecode(response.body));
     return note;
   }
 
@@ -45,7 +47,7 @@ class NotesApi {
       throw Exception('Failed to update note');
     }
 
-    final Note note = Note.fromJson(jsonDecode(response.body));
+    final Note note = Note.fromMap(jsonDecode(response.body));
     return note;
   }
 

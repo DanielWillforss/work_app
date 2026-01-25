@@ -1,4 +1,4 @@
-import 'package:work_app/models/fixture.dart';
+import 'package:shared_models/models/fixture_model.dart';
 
 class FixtureTableData {
   final List<Fixture> fixtures;

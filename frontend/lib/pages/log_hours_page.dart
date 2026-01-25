@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:work_app/models/timelog.dart';
+import 'package:shared_models/models/timelog_model.dart';
 import 'package:work_app/services/timelog_api.dart';
 import 'package:work_app/util.dart';
 

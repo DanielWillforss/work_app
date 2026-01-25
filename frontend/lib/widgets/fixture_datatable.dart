@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:work_app/models/fixture.dart';
+import 'package:shared_models/models/fixture_model.dart';
 
 class FixtureDataTable extends StatelessWidget {
   final List<Fixture> fixtures;

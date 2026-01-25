@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:work_app/models/fixture.dart';
 import 'package:work_app/services/fixtures_api.dart';
+import 'package:shared_models/shared_models.dart';
+import 'package:work_app/widgets/detailrow_widget.dart';
+import 'package:work_app/widgets/editablerow_widget.dart';
 
 class FixtureDetailPage extends StatefulWidget {
   final Fixture fixture;
@@ -110,81 +112,6 @@ class _FixtureDetailPageState extends State<FixtureDetailPage> {
             label: 'Notes',
             controller: _notesController,
             maxLines: 5,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class DetailRow extends StatelessWidget {
-  final String label;
-  final String value;
-
-  const DetailRow({super.key, required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 140,
-            child: Text(
-              '$label:',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.grey,
-              ),
-            ),
-          ),
-          Expanded(child: Text(value)),
-        ],
-      ),
-    );
-  }
-}
-
-class EditableRow extends StatelessWidget {
-  final String label;
-  final TextEditingController controller;
-  final int maxLines;
-
-  const EditableRow({
-    super.key,
-    required this.label,
-    required this.controller,
-    this.maxLines = 1,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 140,
-            child: Text(
-              '$label:',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.grey,
-              ),
-            ),
-          ),
-          Expanded(
-            child: TextField(
-              controller: controller,
-              maxLines: maxLines,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                isDense: true,
-              ),
-            ),
           ),
         ],
       ),

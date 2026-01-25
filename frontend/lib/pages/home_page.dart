@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_app/main.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -13,12 +14,15 @@ class HomePage extends StatelessWidget {
             // Display the image
             Image.asset(
               'assets/images/lundsljud.jpeg',
-              width: 200, // optional: adjust size
-              height: 200,
+              width: 300, // optional: adjust size
+              height: 300,
             ),
             const SizedBox(height: 16), // spacing between image and text
             // Display version text
-            const Text('Version 0.1.0', style: TextStyle(fontSize: 16)),
+            const Text(
+              'Version ${GlobalConstants.version}',
+              style: TextStyle(fontSize: 16),
+            ),
           ],
         ),
       ),

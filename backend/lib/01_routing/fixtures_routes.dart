@@ -13,32 +13,32 @@ class FixturesRoutes {
   FixturesRoutes(this.modelRepo, this.conn);
 
   void register(Router router) {
-    // GET /fixtures/models
-    router.get('/fixtures/models', _getAllModels);
+    // GET /fixtures/models/
+    router.get('/fixtures/models/', _getAllModels);
 
     // GET /fixtures/types
-    router.get('/fixtures/types', _getAllTypes);
+    router.get('/fixtures/types/', _getAllTypes);
 
     // GET /fixtures/manufacturers
-    router.get('/fixtures/manufacturers', _getAllManufacturers);
+    router.get('/fixtures/manufacturers/', _getAllManufacturers);
 
     // GET /fixtures/models/<id>
-    router.get('/fixtures/models/<id>', _getModelById);
+    router.get('/fixtures/models/<id>/', _getModelById);
 
     // GET /fixtures/models/type/<id>
-    router.get('/fixtures/models/type/<id>', _getModelsByType);
+    router.get('/fixtures/models/type/<id>/', _getModelsByType);
 
     // GET /fixtures/models/manufacturer/<id>
-    router.get('/fixtures/models/manufacturer/<id>', _getModelsByManufacturer);
+    router.get('/fixtures/models/manufacturer/<id>/', _getModelsByManufacturer);
 
     // POST /fixtures/models
-    router.post('/fixtures/models', _createModel);
+    router.post('/fixtures/models/', _createModel);
 
     // PUT /fixtures/models/<id>
-    router.put('/fixtures/models/<id>', _updateModel);
+    router.put('/fixtures/models/<id>/', _updateModel);
 
     //DELETE /fixtures/models/<id>
-    router.delete('/fixtures/models/<id>', _deleteModel);
+    router.delete('/fixtures/models/<id>/', _deleteModel);
   }
 
   /// returns all models as a list of json with the keys

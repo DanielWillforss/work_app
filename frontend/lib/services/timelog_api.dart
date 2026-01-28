@@ -8,7 +8,7 @@ class TimelogsApi {
 
   /// GET /timelogs
   static Future<List<Timelog>> getTimelogs() async {
-    final response = await http.get(Uri.parse('$baseUrl/timelogs'));
+    final response = await http.get(Uri.parse('$baseUrl/timelogs/'));
 
     if (response.statusCode != 200) {
       throw Exception('Failed to load timelogs');
@@ -25,7 +25,7 @@ class TimelogsApi {
     String? note,
   }) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/timelogs'),
+      Uri.parse('$baseUrl/timelogs/'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'start_time': startTime?.toIso8601String(),
@@ -47,7 +47,7 @@ class TimelogsApi {
     String? note,
   }) async {
     final response = await http.put(
-      Uri.parse('$baseUrl/timelogs/$id'),
+      Uri.parse('$baseUrl/timelogs/$id/'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'start_time': startTime.toIso8601String(),
@@ -63,7 +63,7 @@ class TimelogsApi {
 
   /// DELETE /timelogs/{id}
   static Future<void> deleteTimelog(int id) async {
-    final response = await http.delete(Uri.parse('$baseUrl/timelogs/$id'));
+    final response = await http.delete(Uri.parse('$baseUrl/timelogs/$id/'));
 
     if (response.statusCode != 200) {
       throw Exception('Failed to delete timelog');
@@ -72,7 +72,7 @@ class TimelogsApi {
 
   /// // POST /timelogs/upload
   static Future<void> uploadTimelogs() async {
-    final response = await http.post(Uri.parse('$baseUrl/timelogs/upload'));
+    final response = await http.post(Uri.parse('$baseUrl/timelogs/upload/'));
 
     if (response.statusCode != 200) {
       throw Exception('Failed to upload timelogs');

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'pages/home_page.dart';
-import 'pages/notes_page.dart';
 import 'pages/fixture_info_page.dart';
 import 'pages/power_calc_page.dart';
 import 'pages/log_hours_page.dart';
+import 'package:notes_repo_widget/note_widget_package.dart';
 
 void main() {
+  NotesApi.baseUrl = 'https://danielwillforss.site/work_app/notes/';
+  //NotesApi.baseUrl = 'http://127.0.0.1:5000/work_app/';
   runApp(MyApp());
 }
 
 class GlobalConstants {
-  static const String baseUrl = 'https://danielwillforss.site';
+  static const String baseUrl = 'https://danielwillforss.site/work_app';
   static const String version = '1.1.0';
 }
 

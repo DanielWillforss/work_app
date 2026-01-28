@@ -8,7 +8,7 @@ class FixturesApi {
 
   /// GET /fixtures/models
   static Future<List<Fixture>> getFixtures() async {
-    final response = await http.get(Uri.parse('$baseUrl/fixtures/models'));
+    final response = await http.get(Uri.parse('$baseUrl/fixtures/models/'));
     if (response.statusCode != 200) {
       throw Exception('Failed to load fixtures');
     }
@@ -21,7 +21,7 @@ class FixturesApi {
 
   /// GET /fixtures/models/{id}
   static Future<Fixture> getFixture(int id) async {
-    final response = await http.get(Uri.parse('$baseUrl/fixtures/models/$id'));
+    final response = await http.get(Uri.parse('$baseUrl/fixtures/models/$id/'));
 
     if (response.statusCode != 200) {
       throw Exception('Failed to load fixture');
@@ -33,7 +33,7 @@ class FixturesApi {
   /// GET /fixtures/models/type/{id}
   static Future<List<Fixture>> getFixturesByType(int typeId) async {
     final response = await http.get(
-      Uri.parse('$baseUrl/fixtures/models/type/$typeId'),
+      Uri.parse('$baseUrl/fixtures/models/type/$typeId/'),
     );
 
     if (response.statusCode != 200) {
@@ -49,7 +49,7 @@ class FixturesApi {
     int manufacturerId,
   ) async {
     final response = await http.get(
-      Uri.parse('$baseUrl/fixtures/models/manufacturer/$manufacturerId'),
+      Uri.parse('$baseUrl/fixtures/models/manufacturer/$manufacturerId/'),
     );
 
     if (response.statusCode != 200) {
@@ -72,7 +72,7 @@ class FixturesApi {
     String notes = '',
   }) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/fixtures/models'),
+      Uri.parse('$baseUrl/fixtures/models/'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'manufacturer_id': manufacturerId,
@@ -106,7 +106,7 @@ class FixturesApi {
     String notes = '',
   }) async {
     final response = await http.put(
-      Uri.parse('$baseUrl/fixtures/models/$id'),
+      Uri.parse('$baseUrl/fixtures/models/$id/'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'manufacturer_id': manufacturerId,
@@ -130,7 +130,7 @@ class FixturesApi {
   /// DELETE /fixtures/models/{id}
   static Future<void> deleteFixture(int id) async {
     final response = await http.delete(
-      Uri.parse('$baseUrl/fixtures/models/$id'),
+      Uri.parse('$baseUrl/fixtures/models/$id/'),
     );
 
     if (response.statusCode != 200) {
@@ -141,7 +141,7 @@ class FixturesApi {
   /// GET /fixtures/manufacturers
   static Future<List<Manufacturer>> getManufacturers() async {
     final response = await http.get(
-      Uri.parse('$baseUrl/fixtures/manufacturers'),
+      Uri.parse('$baseUrl/fixtures/manufacturers/'),
     );
 
     if (response.statusCode != 200) {
@@ -154,7 +154,7 @@ class FixturesApi {
 
   /// GET /fixtures/types
   static Future<List<FixtureType>> getFixtureTypes() async {
-    final response = await http.get(Uri.parse('$baseUrl/fixtures/types'));
+    final response = await http.get(Uri.parse('$baseUrl/fixtures/types/'));
 
     if (response.statusCode != 200) {
       throw Exception('Failed to load fixture types');

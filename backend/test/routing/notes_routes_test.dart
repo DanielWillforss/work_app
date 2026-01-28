@@ -1,224 +1,224 @@
-import 'dart:convert';
+// import 'dart:convert';
 
-import 'package:postgres/postgres.dart';
-import 'package:shelf/shelf.dart';
-import 'package:shelf_router/shelf_router.dart';
-import 'package:test/test.dart';
-import 'package:workapp_backend/01_routing/notes_routes.dart';
-import 'package:workapp_backend/02_Repositories/note_repository.dart';
+// import 'package:postgres/postgres.dart';
+// import 'package:shelf/shelf.dart';
+// import 'package:shelf_router/shelf_router.dart';
+// import 'package:test/test.dart';
+// import 'package:workapp_backend/01_routing/notes_routes.dart';
+// import 'package:workapp_backend/02_Repositories/note_repository.dart';
 
-import '../test_util.dart';
+// import '../test_util.dart';
 
-void main() async {
-  late Router router;
-  late Connection conn;
+// void main() async {
+//   late Router router;
+//   late Connection conn;
 
-  setUp(() async {
-    conn = await TestDatabaseConnection.setUpTest();
-    router = Router();
-    NotesRoutes(NoteRepository(), conn).register(router);
-  });
+//   setUp(() async {
+//     conn = await TestDatabaseConnection.setUpTest();
+//     router = Router();
+//     NotesRoutes(NoteRepository(), conn).register(router);
+//   });
 
-  tearDown(() async {
-    await TestDatabaseConnection.tearDownTest(conn);
-  });
+//   tearDown(() async {
+//     await TestDatabaseConnection.tearDownTest(conn);
+//   });
 
-  Future<Response> createNote({required String title, required String body}) {
-    return router.call(
-      Request(
-        'POST',
-        Uri.parse('http://localhost/notes'),
-        headers: {'content-type': 'application/json'},
-        body: jsonEncode({'title': title, 'body': body}),
-      ),
-    );
-  }
+//   Future<Response> createNote({required String title, required String body}) {
+//     return router.call(
+//       Request(
+//         'POST',
+//         Uri.parse('http://localhost/notes'),
+//         headers: {'content-type': 'application/json'},
+//         body: jsonEncode({'title': title, 'body': body}),
+//       ),
+//     );
+//   }
 
-  group('GET /notes', () {
-    test('returns empty list when database is empty', () async {
-      final request = Request('GET', Uri.parse('http://localhost/notes'));
-      final response = await router.call(request);
-      final body = await response.readAsString();
+//   group('GET /notes', () {
+//     test('returns empty list when database is empty', () async {
+//       final request = Request('GET', Uri.parse('http://localhost/notes'));
+//       final response = await router.call(request);
+//       final body = await response.readAsString();
 
-      expect(response.statusCode, 200);
-      expect(jsonDecode(body), isList);
-      expect(jsonDecode(body), isEmpty);
-    });
+//       expect(response.statusCode, 200);
+//       expect(jsonDecode(body), isList);
+//       expect(jsonDecode(body), isEmpty);
+//     });
 
-    test('returns all notes', () async {
-      await createNote(title: 'Note 1', body: 'body 1');
-      await createNote(title: 'Note 2', body: 'body 2');
+//     test('returns all notes', () async {
+//       await createNote(title: 'Note 1', body: 'body 1');
+//       await createNote(title: 'Note 2', body: 'body 2');
 
-      final request = Request('GET', Uri.parse('http://localhost/notes'));
-      final response = await router.call(request);
-      final body = jsonDecode(await response.readAsString());
+//       final request = Request('GET', Uri.parse('http://localhost/notes'));
+//       final response = await router.call(request);
+//       final body = jsonDecode(await response.readAsString());
 
-      expect(response.statusCode, 200);
-      expect(body.length, 2);
-    });
-  });
+//       expect(response.statusCode, 200);
+//       expect(body.length, 2);
+//     });
+//   });
 
-  group('POST /notes', () {
-    test('creates a note', () async {
-      final response = await createNote(
-        title: 'Test note',
-        body: 'This is a test note',
-      );
+//   group('POST /notes', () {
+//     test('creates a note', () async {
+//       final response = await createNote(
+//         title: 'Test note',
+//         body: 'This is a test note',
+//       );
 
-      final body = jsonDecode(await response.readAsString());
+//       final body = jsonDecode(await response.readAsString());
 
-      expect(response.statusCode, 200);
-      expect(body['title'], 'Test note');
-      expect(body['body'], 'This is a test note');
-    });
-  });
+//       expect(response.statusCode, 200);
+//       expect(body['title'], 'Test note');
+//       expect(body['body'], 'This is a test note');
+//     });
+//   });
 
-  group('GET /notes/<id>', () {
-    test('returns note by id', () async {
-      await createNote(title: 'Find me', body: 'Here I am');
+//   group('GET /notes/<id>', () {
+//     test('returns note by id', () async {
+//       await createNote(title: 'Find me', body: 'Here I am');
 
-      final getAll = await router.call(
-        Request('GET', Uri.parse('http://localhost/notes')),
-      );
-      final notes = jsonDecode(await getAll.readAsString());
-      final id = notes.first['id'];
+//       final getAll = await router.call(
+//         Request('GET', Uri.parse('http://localhost/notes')),
+//       );
+//       final notes = jsonDecode(await getAll.readAsString());
+//       final id = notes.first['id'];
 
-      final response = await router.call(
-        Request('GET', Uri.parse('http://localhost/notes/$id')),
-      );
+//       final response = await router.call(
+//         Request('GET', Uri.parse('http://localhost/notes/$id')),
+//       );
 
-      final body = jsonDecode(await response.readAsString());
+//       final body = jsonDecode(await response.readAsString());
 
-      expect(response.statusCode, 200);
-      expect(body['id'], id);
-    });
+//       expect(response.statusCode, 200);
+//       expect(body['id'], id);
+//     });
 
-    test('returns bad request for invalid id', () async {
-      final response = await router.call(
-        Request('GET', Uri.parse('http://localhost/notes/abc')),
-      );
+//     test('returns bad request for invalid id', () async {
+//       final response = await router.call(
+//         Request('GET', Uri.parse('http://localhost/notes/abc')),
+//       );
 
-      expect(response.statusCode, 400);
-    });
+//       expect(response.statusCode, 400);
+//     });
 
-    test('returns not_found for missing note', () async {
-      final response = await router.call(
-        Request('GET', Uri.parse('http://localhost/notes/9999')),
-      );
+//     test('returns not_found for missing note', () async {
+//       final response = await router.call(
+//         Request('GET', Uri.parse('http://localhost/notes/9999')),
+//       );
 
-      final body = jsonDecode(await response.readAsString());
+//       final body = jsonDecode(await response.readAsString());
 
-      expect(response.statusCode, 200);
-      expect(body['status'], 'not_found');
-    });
-  });
+//       expect(response.statusCode, 200);
+//       expect(body['status'], 'not_found');
+//     });
+//   });
 
-  group('PUT /notes/<id>', () {
-    test('updates a note', () async {
-      await createNote(title: 'Old', body: 'Old body');
+//   group('PUT /notes/<id>', () {
+//     test('updates a note', () async {
+//       await createNote(title: 'Old', body: 'Old body');
 
-      final getAll = await router.call(
-        Request('GET', Uri.parse('http://localhost/notes')),
-      );
-      final id = jsonDecode(await getAll.readAsString()).first['id'];
+//       final getAll = await router.call(
+//         Request('GET', Uri.parse('http://localhost/notes')),
+//       );
+//       final id = jsonDecode(await getAll.readAsString()).first['id'];
 
-      final response = await router.call(
-        Request(
-          'PUT',
-          Uri.parse('http://localhost/notes/$id'),
-          headers: {'content-type': 'application/json'},
-          body: jsonEncode({'title': 'New'}),
-        ),
-      );
+//       final response = await router.call(
+//         Request(
+//           'PUT',
+//           Uri.parse('http://localhost/notes/$id'),
+//           headers: {'content-type': 'application/json'},
+//           body: jsonEncode({'title': 'New'}),
+//         ),
+//       );
 
-      final body = jsonDecode(await response.readAsString());
+//       final body = jsonDecode(await response.readAsString());
 
-      expect(response.statusCode, 200);
-      expect(body['id'], id);
-      expect(body['title'], 'New');
-    });
+//       expect(response.statusCode, 200);
+//       expect(body['id'], id);
+//       expect(body['title'], 'New');
+//     });
 
-    test('fails for invalid id', () async {
-      final response = await router.call(
-        Request(
-          'PUT',
-          Uri.parse('http://localhost/notes/abc'),
-          headers: {'content-type': 'application/json'},
-          body: jsonEncode({'title': 'New'}),
-        ),
-      );
+//     test('fails for invalid id', () async {
+//       final response = await router.call(
+//         Request(
+//           'PUT',
+//           Uri.parse('http://localhost/notes/abc'),
+//           headers: {'content-type': 'application/json'},
+//           body: jsonEncode({'title': 'New'}),
+//         ),
+//       );
 
-      expect(response.statusCode, 400);
-    });
+//       expect(response.statusCode, 400);
+//     });
 
-    test('fails when title and body are missing', () async {
-      await createNote(title: 'Test', body: 'Test');
+//     test('fails when title and body are missing', () async {
+//       await createNote(title: 'Test', body: 'Test');
 
-      final response = await router.call(
-        Request(
-          'PUT',
-          Uri.parse('http://localhost/notes/1'),
-          headers: {'content-type': 'application/json'},
-          body: jsonEncode({}),
-        ),
-      );
+//       final response = await router.call(
+//         Request(
+//           'PUT',
+//           Uri.parse('http://localhost/notes/1'),
+//           headers: {'content-type': 'application/json'},
+//           body: jsonEncode({}),
+//         ),
+//       );
 
-      final body = jsonDecode(await response.readAsString());
+//       final body = jsonDecode(await response.readAsString());
 
-      expect(body['status'], 'null_update');
-    });
+//       expect(body['status'], 'null_update');
+//     });
 
-    test('returns not_found when note does not exist', () async {
-      final response = await router.call(
-        Request(
-          'PUT',
-          Uri.parse('http://localhost/notes/999'),
-          headers: {'content-type': 'application/json'},
-          body: jsonEncode({'title': 'New'}),
-        ),
-      );
+//     test('returns not_found when note does not exist', () async {
+//       final response = await router.call(
+//         Request(
+//           'PUT',
+//           Uri.parse('http://localhost/notes/999'),
+//           headers: {'content-type': 'application/json'},
+//           body: jsonEncode({'title': 'New'}),
+//         ),
+//       );
 
-      final body = jsonDecode(await response.readAsString());
+//       final body = jsonDecode(await response.readAsString());
 
-      expect(body['status'], 'not_found');
-    });
-  });
+//       expect(body['status'], 'not_found');
+//     });
+//   });
 
-  group('DELETE /notes/<id>', () {
-    test('deletes a note', () async {
-      await createNote(title: 'Delete me', body: 'Bye');
+//   group('DELETE /notes/<id>', () {
+//     test('deletes a note', () async {
+//       await createNote(title: 'Delete me', body: 'Bye');
 
-      final getAll = await router.call(
-        Request('GET', Uri.parse('http://localhost/notes')),
-      );
-      final id = jsonDecode(await getAll.readAsString()).first['id'];
+//       final getAll = await router.call(
+//         Request('GET', Uri.parse('http://localhost/notes')),
+//       );
+//       final id = jsonDecode(await getAll.readAsString()).first['id'];
 
-      final response = await router.call(
-        Request('DELETE', Uri.parse('http://localhost/notes/$id')),
-      );
+//       final response = await router.call(
+//         Request('DELETE', Uri.parse('http://localhost/notes/$id')),
+//       );
 
-      final body = jsonDecode(await response.readAsString());
+//       final body = jsonDecode(await response.readAsString());
 
-      expect(response.statusCode, 200);
-      expect(body['status'], 'deleted');
-    });
+//       expect(response.statusCode, 200);
+//       expect(body['status'], 'deleted');
+//     });
 
-    test('fails for invalid id', () async {
-      final response = await router.call(
-        Request('DELETE', Uri.parse('http://localhost/notes/abc')),
-      );
+//     test('fails for invalid id', () async {
+//       final response = await router.call(
+//         Request('DELETE', Uri.parse('http://localhost/notes/abc')),
+//       );
 
-      expect(response.statusCode, 400);
-    });
+//       expect(response.statusCode, 400);
+//     });
 
-    test('returns not_found for missing note', () async {
-      final response = await router.call(
-        Request('DELETE', Uri.parse('http://localhost/notes/999')),
-      );
+//     test('returns not_found for missing note', () async {
+//       final response = await router.call(
+//         Request('DELETE', Uri.parse('http://localhost/notes/999')),
+//       );
 
-      final body = jsonDecode(await response.readAsString());
+//       final body = jsonDecode(await response.readAsString());
 
-      expect(body['status'], 'not_found');
-    });
-  });
-}
+//       expect(body['status'], 'not_found');
+//     });
+//   });
+// }

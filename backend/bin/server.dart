@@ -7,7 +7,6 @@ import 'package:workapp_backend/02_Repositories/fixture_model_repository.dart';
 
 import 'package:workapp_backend/database_connection.dart';
 import 'package:workapp_backend/01_routing/notes_routes.dart';
-import 'package:workapp_backend/02_Repositories/note_repository.dart';
 import 'package:workapp_backend/01_routing/timelogs_routes.dart';
 import 'package:workapp_backend/02_Repositories/timelog_repository.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -18,7 +17,7 @@ Future<void> main() async {
   final router = Router();
 
   // Register route groups
-  NotesRoutes(NoteRepository(), conn).register(router);
+  NotesRoutes(conn).register(router);
   TimelogRoutes(TimelogRepository(), conn).register(router);
   FixturesRoutes(FixtureModelRepository(), conn).register(router);
 

@@ -14,22 +14,22 @@ class TimelogRoutes {
 
   void register(Router router) {
     // GET /timelogs
-    router.get('/timelogs', _getAll);
+    router.get('/timelogs/', _getAll);
 
     // GET /timelogs/<id>
-    router.get('/timelogs/<id>', _getById);
+    router.get('/timelogs/<id>/', _getById);
 
     // POST /timelogs
-    router.post('/timelogs', _create);
+    router.post('/timelogs/', _create);
 
     // PUT /timelogs/<id>
-    router.put('/timelogs/<id>', _update);
+    router.put('/timelogs/<id>/', _update);
 
     // DELETE /timelogs/<id>
-    router.delete('/timelogs/<id>', _delete);
+    router.delete('/timelogs/<id>/', _delete);
 
     // POST /timelogs/upload
-    router.post('/timelogs/upload', _upload);
+    router.post('/timelogs/upload/', _upload);
   }
 
   /// returns all timelogs as a list of json with the keys "id", "start_time", "end_time", "note"
@@ -138,13 +138,11 @@ class TimelogRoutes {
   }
 
   Future<Response> _upload(Request req) async {
-    print("uploading");
     try {
       final googleApi = GoogleApiHandeler();
       await googleApi.init();
 
       final logs = await timelogRepo.findAll(conn);
-      print("trying to write");
       await googleApi.writeData(logs);
       return jsonResponse({'status': 'uploaded'});
     } on IdNotFoundException {

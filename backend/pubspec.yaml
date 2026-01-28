@@ -20,6 +20,10 @@ dependencies:
   intl: ^0.20.2
   shared_models:
     path: ../shared_models
+  notes_repo_core:
+    git:
+      url: https://github.com/DanielWillforss/notes_repo_code.git
+      ref: main
   
 
 dev_dependencies:

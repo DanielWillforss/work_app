@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'pages/home_page.dart';
-import 'pages/fixture_info_page.dart';
-import 'pages/power_calc_page.dart';
+import 'moved/home_page.dart';
+import 'moved/fixture_info_page.dart';
+import 'moved/power_calc_page.dart';
 import 'pages/log_hours_page.dart';
 import 'package:notes_repo_widget/note_widget_package.dart';
 
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My App',
+      title: 'Work App',
       theme: ThemeData(
         // Main theme colors
         brightness: Brightness.dark,
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           foregroundColor: Colors.grey[200],
         ),
       ),
-      home: MainPage(),
+      home: LogHoursPage(),
 
       builder: (context, child) {
         return MediaQuery(

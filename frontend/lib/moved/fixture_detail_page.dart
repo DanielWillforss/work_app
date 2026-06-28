@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:work_app/services/fixtures_api.dart';
+import 'package:work_app/moved/fixtures_api.dart';
 import 'package:shared_models/shared_models.dart';
-import 'package:work_app/widgets/detailrow_widget.dart';
-import 'package:work_app/widgets/editablerow_widget.dart';
+import 'package:work_app/moved/widgets/detailrow_widget.dart';
+import 'package:work_app/moved/widgets/editablerow_widget.dart';
 
 class FixtureDetailPage extends StatefulWidget {
   final Fixture fixture;

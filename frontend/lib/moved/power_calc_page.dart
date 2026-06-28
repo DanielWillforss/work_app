@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_models/models/fixture_model.dart';
-import 'package:work_app/services/fixtures_api.dart';
+import 'package:work_app/moved/fixtures_api.dart';
 
 class PowerCalcPage extends StatefulWidget {
   const PowerCalcPage({super.key});

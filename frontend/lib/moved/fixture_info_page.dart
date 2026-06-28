@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_models/models/fixture_model.dart';
-import 'package:work_app/models/fixture_tabledata.dart';
-import 'package:work_app/pages/fixture_detail_page.dart';
-import 'package:work_app/services/fixtures_api.dart';
-import 'package:work_app/widgets/fixture_datatable.dart';
+import 'package:work_app/moved/models/fixture_tabledata.dart';
+import 'package:work_app/moved/fixture_detail_page.dart';
+import 'package:work_app/moved/fixtures_api.dart';
+import 'package:work_app/moved/widgets/fixture_datatable.dart';
 
 class FixtureInfoPage extends StatefulWidget {
   const FixtureInfoPage({super.key});

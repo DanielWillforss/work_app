@@ -1,6 +1,6 @@
 import 'dart:convert';
+import 'package:app_core/models/timelog_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_models/models/timelog_model.dart';
 import 'package:work_app/main.dart';
 
 class TimelogsApi {

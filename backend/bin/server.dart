@@ -1,3 +1,5 @@
+import 'package:app_core/database/database.dart';
+import 'package:postgres/postgres.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_router/shelf_router.dart';
@@ -11,6 +13,16 @@ Future<void> main() async {
   await initializeDateFormatting('sv_SE', null);
   //final conn = await DatabaseConnection.get();
   final router = Router();
+
+  Database.init(
+    Endpoint(
+        host: 'localhost',
+        port: 5432,
+        database: 'workapp_dev',
+        username: 'admin',
+        password: 'admin',
+      ),
+  );
 
   // Register route groups
   //NotesRoutes(conn).register(router);

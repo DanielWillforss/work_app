@@ -1,12 +1,12 @@
+import 'package:app_core/database/database.dart';
+import 'package:app_core/models/timelog_model.dart';
+import 'package:app_core/util/exceptions.dart';
 import 'package:postgres/postgres.dart';
-import 'package:shared_models/models/timelog_model.dart';
-import 'package:workapp_backend/database_connection.dart';
-import 'package:workapp_backend/util/general_util.dart';
 
 class TimelogRepository {
+  final Database db;
 
-
-  final DatabaseConnection db = DatabaseConnection();
+  TimelogRepository() : db = Database.instance;
 
   /// Get all timelogs as List
   Future<List<Timelog>> findAll() async {

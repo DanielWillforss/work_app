@@ -1,11 +1,16 @@
 import 'package:postgres/postgres.dart';
 import 'package:shared_models/models/timelog_model.dart';
+import 'package:workapp_backend/database_connection.dart';
 import 'package:workapp_backend/util/general_util.dart';
 
 class TimelogRepository {
+
+
+  final DatabaseConnection db = DatabaseConnection();
+
   /// Get all timelogs as List
-  Future<List<Timelog>> findAll(Connection conn) async {
-    final result = await conn.execute(
+  Future<List<Timelog>> findAll() async {
+    final result = await db.execute(
       Sql.named('SELECT * FROM content.timelogs ORDER BY id DESC'),
     );
 
@@ -14,8 +19,8 @@ class TimelogRepository {
 
   /// Get a specific timelog by id
   /// throws IdNotFoundException if id is not found
-  Future<Timelog> findById(Connection conn, int id) async {
-    final result = await conn.execute(
+  Future<Timelog> findById(int id) async {
+    final result = await db.execute(
       Sql.named('SELECT * FROM content.timelogs WHERE id = @id'),
       parameters: {'id': id},
     );
@@ -29,13 +34,12 @@ class TimelogRepository {
   /// Empty note defaults to ''
   /// EndTime has to be after StartTime
   /// returns the updated timelog
-  Future<Timelog> insert(
-    Connection conn, {
+  Future<Timelog> insert({
     required DateTime startTime,
     DateTime? endTime,
     String? note,
   }) async {
-    final result = await conn.execute(
+    final result = await db.execute(
       Sql.named('''
         INSERT INTO content.timelogs (start_time, end_time, note)
         VALUES (@start_time, @end_time, @note)
@@ -56,8 +60,7 @@ class TimelogRepository {
   /// throws Exception("No change requested") if starttime, endtime, and note are null
   /// throws NullUpdateExeption if nothing is updated
   /// Returns updated Note
-  Future<Timelog> update(
-    Connection conn, {
+  Future<Timelog> update({
     required int id,
     DateTime? startTime,
     DateTime? endTime,
@@ -94,7 +97,7 @@ class TimelogRepository {
       RETURNING *
     ''';
 
-    final result = await conn.execute(Sql.named(sql), parameters: parameters);
+    final result = await db.execute(Sql.named(sql), parameters: parameters);
 
     if (result.affectedRows == 0) {
       throw IdNotFoundException(id);
@@ -105,8 +108,8 @@ class TimelogRepository {
 
   /// Delete a timelog by id
   /// throws IdNotFoundException for non-existant id
-  Future<void> delete(Connection conn, int id) async {
-    final result = await conn.execute(
+  Future<void> delete(int id) async {
+    final result = await db.execute(
       Sql.named('DELETE FROM content.timelogs WHERE id = @id'),
       parameters: {'id': id},
     );

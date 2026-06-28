@@ -1,4 +1,3 @@
-import 'package:postgres/postgres.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:workapp_backend/02_Repositories/timelog_repository.dart';
@@ -8,9 +7,8 @@ import 'package:workapp_backend/util/parse_util.dart';
 
 class TimelogRoutes {
   final TimelogRepository timelogRepo;
-  final Connection conn;
 
-  TimelogRoutes(this.timelogRepo, this.conn);
+  TimelogRoutes(this.timelogRepo);
 
   void register(Router router) {
     // GET /timelogs
@@ -34,7 +32,7 @@ class TimelogRoutes {
 
   /// returns all timelogs as a list of json with the keys "id", "start_time", "end_time", "note"
   Future<Response> _getAll(Request req) async {
-    final logs = await timelogRepo.findAll(conn);
+    final logs = await timelogRepo.findAll();
     return jsonResponse(logs.map((l) => l.toJson()).toList());
   }
 
@@ -46,7 +44,7 @@ class TimelogRoutes {
     if (!parsedId.isOk) return parsedId.error!;
 
     try {
-      final log = await timelogRepo.findById(conn, parsedId.value!);
+      final log = await timelogRepo.findById(parsedId.value!);
       return jsonResponse(log.toJson());
     } on IdNotFoundException {
       return jsonResponse({'status': 'not_found'});
@@ -75,7 +73,6 @@ class TimelogRoutes {
     if (!endTime.isOk) return endTime.error!;
 
     await timelogRepo.insert(
-      conn,
       startTime: startTime.value!,
       endTime: endTime.value,
       note: payload['note'],
@@ -108,7 +105,6 @@ class TimelogRoutes {
 
     try {
       await timelogRepo.update(
-        conn,
         id: parsedId.value!,
         startTime: startTime.value,
         endTime: endTime.value,
@@ -130,7 +126,7 @@ class TimelogRoutes {
     if (!parsedId.isOk) return parsedId.error!;
 
     try {
-      await timelogRepo.delete(conn, parsedId.value!);
+      await timelogRepo.delete(parsedId.value!);
       return jsonResponse({'status': 'deleted'});
     } on IdNotFoundException {
       return jsonResponse({'status': 'not_found'});
@@ -142,7 +138,7 @@ class TimelogRoutes {
       final googleApi = GoogleApiHandeler();
       await googleApi.init();
 
-      final logs = await timelogRepo.findAll(conn);
+      final logs = await timelogRepo.findAll();
       await googleApi.writeData(logs);
       return jsonResponse({'status': 'uploaded'});
     } on IdNotFoundException {

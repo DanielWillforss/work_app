@@ -2,24 +2,20 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_router/shelf_router.dart';
 import 'package:shelf_cors_headers/shelf_cors_headers.dart';
-import 'package:workapp_backend/01_routing/fixtures_routes.dart';
-import 'package:workapp_backend/02_Repositories/fixture_model_repository.dart';
 
-import 'package:workapp_backend/database_connection.dart';
-import 'package:workapp_backend/01_routing/notes_routes.dart';
 import 'package:workapp_backend/01_routing/timelogs_routes.dart';
 import 'package:workapp_backend/02_Repositories/timelog_repository.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 Future<void> main() async {
   await initializeDateFormatting('sv_SE', null);
-  final conn = await DatabaseConnection.get();
+  //final conn = await DatabaseConnection.get();
   final router = Router();
 
   // Register route groups
-  NotesRoutes(conn).register(router);
-  TimelogRoutes(TimelogRepository(), conn).register(router);
-  FixturesRoutes(FixtureModelRepository(), conn).register(router);
+  //NotesRoutes(conn).register(router);
+  TimelogRoutes(TimelogRepository()).register(router);
+  //FixturesRoutes(FixtureModelRepository(), conn).register(router);
 
   final handler = const Pipeline()
       .addMiddleware(logRequests())

@@ -30,7 +30,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "3c1155e1e743beff020dd16d0a7bc82814eedeb6"
+      resolved-ref: "44f61bfb1c0de3e724037ec378702dec0d9325a8"
       url: "https://github.com/DanielWillforss/app_core.git"
     source: git
     version: "1.0.0"

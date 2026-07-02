@@ -9,9 +9,9 @@ void main() {
 }
 
 class GlobalConstants {
-  //static const String baseUrl = 'https://danielwillforss.site/work_app';
+  static const String baseUrl = 'https://danielwillforss.site/work_app';
   //static const String baseUrl = 'http://192.168.0.130/work_app';
-  static const String baseUrl = 'http://localhost:3000';
+  //static const String baseUrl = 'http://localhost:3000';
   static const String version = '1.1.0';
 }
 

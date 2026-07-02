@@ -11,7 +11,7 @@ class TimelogRepository {
   /// Get all timelogs as List
   Future<List<Timelog>> findAll() async {
     final result = await db.execute(
-      Sql.named('SELECT * FROM schedule.timelogs ORDER BY id DESC'),
+      Sql.named('SELECT * FROM content.timelogs ORDER BY id DESC'),
     );
 
     return result.map((row) => Timelog.fromSql(row.toColumnMap())).toList();
@@ -21,7 +21,7 @@ class TimelogRepository {
   /// throws IdNotFoundException if id is not found
   Future<Timelog> findById(int id) async {
     final result = await db.execute(
-      Sql.named('SELECT * FROM schedule.timelogs WHERE id = @id'),
+      Sql.named('SELECT * FROM content.timelogs WHERE id = @id'),
       parameters: {'id': id},
     );
 
@@ -41,7 +41,7 @@ class TimelogRepository {
   }) async {
     final result = await db.execute(
       Sql.named('''
-        INSERT INTO schedule.timelogs (start_time, end_time, note)
+        INSERT INTO content.timelogs (start_time, end_time, note)
         VALUES (@start_time, @end_time, @note)
         RETURNING *
       '''),
@@ -91,7 +91,7 @@ class TimelogRepository {
 
     final sql =
         '''
-      UPDATE schedule.timelogs
+      UPDATE content.timelogs
       SET ${fields.join(', ')}
       WHERE id = @id
       RETURNING *
@@ -110,7 +110,7 @@ class TimelogRepository {
   /// throws IdNotFoundException for non-existant id
   Future<void> delete(int id) async {
     final result = await db.execute(
-      Sql.named('DELETE FROM schedule.timelogs WHERE id = @id'),
+      Sql.named('DELETE FROM content.timelogs WHERE id = @id'),
       parameters: {'id': id},
     );
 

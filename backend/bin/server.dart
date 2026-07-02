@@ -18,7 +18,7 @@ Future<void> main() async {
     Endpoint(
         host: 'localhost',
         port: 5432,
-        database: 'dev_db',
+        database: 'release_db',
         username: 'admin',
         password: 'admin',
       ),

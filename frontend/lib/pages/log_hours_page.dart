@@ -26,6 +26,11 @@ class _LogHoursPage extends State<LogHoursPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      appBar: AppBar(
+        title: Text("Timelogs"),
+      ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await _showDialogWindow(null);

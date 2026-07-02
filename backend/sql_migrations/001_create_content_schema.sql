@@ -1,5 +1,5 @@
 -- Create schema
-CREATE SCHEMA content AUTHORIZATION admin;
+CREATE SCHEMA schedule;
 
 -- Create content table
 CREATE TABLE content.notes (
@@ -10,7 +10,7 @@ CREATE TABLE content.notes (
     updated_at TIMESTAMPTZ DEFAULT now()
 );
 
-CREATE TABLE content.timelogs (
+CREATE TABLE schedule.timelogs (
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     start_time TIMESTAMPTZ NOT NULL,
     end_time   TIMESTAMPTZ,

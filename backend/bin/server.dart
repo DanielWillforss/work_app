@@ -18,16 +18,13 @@ Future<void> main() async {
     Endpoint(
         host: 'localhost',
         port: 5432,
-        database: 'workapp_dev',
+        database: 'dev_db',
         username: 'admin',
         password: 'admin',
       ),
   );
 
-  // Register route groups
-  //NotesRoutes(conn).register(router);
   TimelogRoutes(TimelogRepository()).register(router);
-  //FixturesRoutes(FixtureModelRepository(), conn).register(router);
 
   final handler = const Pipeline()
       .addMiddleware(logRequests())
